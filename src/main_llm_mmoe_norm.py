@@ -134,16 +134,6 @@ def test(model, history_list, test_list,mask_list,t, num_rels, num_nodes, use_cu
             input_list.append(test_snap)
         idx += 1
     #hit_save(ranks_raw)
-    print("all average",torch.mean(torch.cat(score_wights)))
-    print("all variance",torch.var(torch.cat(score_wights)))
-    print("his average",torch.mean(torch.cat(score_wights_his)))
-    print("his variance",torch.var(torch.cat(score_wights_his)))
-    print("nhis average",torch.mean(torch.cat(score_wights_nhis)))
-    print("nhis variance",torch.var(torch.cat(score_wights_nhis)))
-    print("llm_his average",torch.mean(torch.cat(llms_his)))
-    print("llm_his variance",torch.var(torch.cat(llms_his)))
-    print("llm_nhis average",torch.mean(torch.cat(llms_nhis)))
-    print("llm_nhis variance",torch.var(torch.cat(llms_nhis)))
     mrr_raw = utils.stat_ranks(ranks_raw, "raw_ent")
     mrr_filter = utils.stat_ranks(ranks_filter, "filter_ent")
     mrr_raw_r = utils.stat_ranks(ranks_raw_r, "raw_rel")
@@ -260,6 +250,7 @@ def run_experiment(args, n_hidden=None, n_layers=None, dropout=None, n_bases=Non
         print("----------------------------------------start training----------------------------------------\n")
         best_mrr = 0
         
+        #This step is to load RE-GCN encoder from model_state_file.
         if use_cuda:
             checkpoint = torch.load(model_state_file, map_location=torch.device(args.gpu))
         else:
