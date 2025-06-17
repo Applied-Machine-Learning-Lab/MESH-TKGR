@@ -127,6 +127,7 @@ class RecurrentRGCN(nn.Module):
         torch.nn.init.normal_(self.dynamic_emb1)
         #self.dynamic_emb = self.make_embedding(h_dim)
         #torch.save(self.dynamic_emb, '../models/words_emb.pth')
+        #This step is to load semantic embeddings stored in entity_emb.pth and relation_emb.pth
         self.llm_entity_emb = torch.load('../models/entity_emb.pth')
         llm_relation_emb = torch.load('../models/relation_emb.pth')
         self.llm_relation_emb=torch.cat((llm_relation_emb,llm_relation_emb.clone()),dim=0).to(self.gpu)
